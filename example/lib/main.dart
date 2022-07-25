@@ -39,48 +39,42 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Country State and City Picker'),
+        title: Text('Country State Picker'),
       ),
       body: Container(
           padding: EdgeInsets.symmetric(horizontal: 20),
-          height: 600,
-          child: Column(
-            children: [
-              SizedBox(height: 30.0),
-              SelectState(
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(4.0))),
-                    contentPadding: EdgeInsets.all(5.0)),
-                spacing: 25.0,
-                onCountryChanged: (value) {
-                  setState(() {
-                    countryValue = value;
-                  });
-                },
-                onCountryTap: () => displayMsg('You\'ve tapped on countries!'),
-                onStateChanged: (value) {
-                  setState(() {
-                    stateValue = value;
-                  });
-                },
-                onStateTap: () => displayMsg('You\'ve tapped on states!'),
-                onCityChanged: (value) {
-                  setState(() {
-                    cityValue = value;
-                  });
-                },
-                onCityTap: () => displayMsg('You\'ve tapped on cities!'),
-              ),
-              // InkWell(
-              //     onTap: () {
-              //       print('country selected is $countryValue');
-              //       print('country selected is $stateValue');
-              //       print('country selected is $cityValue');
-              //     },
-              //     child: Text(' Check'))
-            ],
+          // height: 600,
+          child: Container(
+            child: Column(
+              children: [
+                SelectState(
+                  decoration: InputDecoration(
+                    enabledBorder: InputBorder.none,
+                    contentPadding: EdgeInsets.all(5.0),
+                  ),
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w700
+                  ),
+                  spacing: 25.0,
+                  countryLogo: Icon(Icons.public),
+                  onCountryChanged: (value) {
+                    setState(() {
+                      countryValue = value;
+                    });
+                  },
+                  stateLogo: Icon(Icons.domain),
+                  onCountryTap: () => displayMsg('You\'ve tapped on countries!'),
+                  onStateChanged: (value) {
+                    setState(() {
+                      stateValue = value;
+                    });
+                  },
+                  onStateTap: () => displayMsg('You\'ve tapped on states!'),
+                  iconColor: Colors.black,
+                ),
+              ],
+            ),
           )),
     );
   }

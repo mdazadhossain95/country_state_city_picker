@@ -9,8 +9,8 @@ import 'model/select_status_model.dart' as StatusModel;
 
 class SelectState extends StatefulWidget {
   final ValueChanged<String> onCountryChanged;
-  final ValueChanged<String> onStateChanged;
-  final ValueChanged<String> onCityChanged;
+  final ValueChanged<String>? onStateChanged;
+  final ValueChanged<String>? onCityChanged;
   final VoidCallback? onCountryTap;
   final VoidCallback? onStateTap;
   final VoidCallback? onCityTap;
@@ -18,12 +18,15 @@ class SelectState extends StatefulWidget {
   final Color? dropdownColor;
   final InputDecoration decoration;
   final double spacing;
+  final Color iconColor;
+  final Widget? countryLogo;
+  final Widget? stateLogo;
 
   const SelectState(
       {Key? key,
       required this.onCountryChanged,
       required this.onStateChanged,
-      required this.onCityChanged,
+      this.onCityChanged,
       this.decoration =
           const InputDecoration(contentPadding: EdgeInsets.all(0.0)),
       this.spacing = 0.0,
@@ -31,7 +34,10 @@ class SelectState extends StatefulWidget {
       this.dropdownColor,
       this.onCountryTap,
       this.onStateTap,
-      this.onCityTap})
+      this.onCityTap,
+      required this.iconColor,
+      this.countryLogo,
+      this.stateLogo})
       : super(key: key);
 
   @override
@@ -39,12 +45,12 @@ class SelectState extends StatefulWidget {
 }
 
 class _SelectStateState extends State<SelectState> {
-  List<String> _cities = ["Choose City"];
-  List<String> _country = ["Choose Country"];
-  String _selectedCity = "Choose City";
-  String _selectedCountry = "Choose Country";
-  String _selectedState = "Choose State/Province";
-  List<String> _states = ["Choose State/Province"];
+  List<String> _cities = ["City"];
+  List<String> _country = ["Country"];
+  String _selectedCity = "City";
+  String _selectedCountry = "Country";
+  String _selectedState = "State";
+  List<String> _states = ["State"];
   var responses;
 
   @override
@@ -126,8 +132,8 @@ class _SelectStateState extends State<SelectState> {
   void _onSelectedCountry(String value) {
     if (!mounted) return;
     setState(() {
-      _selectedState = "Choose  State/Province";
-      _states = ["Choose  State/Province"];
+      _selectedState = "State";
+      _states = ["State"];
       _selectedCountry = value;
       this.widget.onCountryChanged(value);
       getState();
@@ -137,10 +143,10 @@ class _SelectStateState extends State<SelectState> {
   void _onSelectedState(String value) {
     if (!mounted) return;
     setState(() {
-      _selectedCity = "Choose City";
-      _cities = ["Choose City"];
+      _selectedCity = "City";
+      _cities = ["City"];
       _selectedState = value;
-      this.widget.onStateChanged(value);
+      this.widget.onStateChanged!(value);
       getCity();
     });
   }
@@ -149,104 +155,99 @@ class _SelectStateState extends State<SelectState> {
     if (!mounted) return;
     setState(() {
       _selectedCity = value;
-      this.widget.onCityChanged(value);
+      this.widget.onCityChanged!(value);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        InputDecorator(
-          decoration: widget.decoration,
-          child: DropdownButtonHideUnderline(
-              child: DropdownButton<String>(
-            dropdownColor: widget.dropdownColor,
-            isExpanded: true,
-            items: _country.map((String dropDownStringItem) {
-              return DropdownMenuItem<String>(
-                value: dropDownStringItem,
-                child: Row(
-                  children: [
-                    Flexible(
-                      child: Text(
-                        dropDownStringItem,
-                        style: widget.style,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    )
-                  ],
+        Flexible(
+          child: Row(
+            children: [
+              Container(
+                child: widget.countryLogo,
+              ),
+              Flexible(
+                child: InputDecorator(
+                  decoration: widget.decoration,
+                  child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        dropdownColor: widget.dropdownColor,
+                        isExpanded: true,
+                        items: _country.map((String dropDownStringItem) {
+                          return DropdownMenuItem<String>(
+                            value: dropDownStringItem,
+                            child: Row(
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    dropDownStringItem,
+                                    style: widget.style,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                        // onTap: ,
+                        onChanged: (value) => _onSelectedCountry(value!),
+                        onTap: widget.onCountryTap,
+                        // onChanged: (value) => _onSelectedCountry(value!),
+                        value: _selectedCountry,
+                      )),
                 ),
-              );
-            }).toList(),
-            // onTap: ,
-            onChanged: (value) => _onSelectedCountry(value!),
-            onTap: widget.onCountryTap,
-            // onChanged: (value) => _onSelectedCountry(value!),
-            value: _selectedCountry,
-          )),
+              ),
+            ],
+          ),
         ),
-        SizedBox(
-          height: widget.spacing,
-        ),
-        InputDecorator(
-          decoration: widget.decoration,
-          child: DropdownButtonHideUnderline(
-              child: DropdownButton<String>(
-            dropdownColor: widget.dropdownColor,
-            isExpanded: true,
-            items: _states.map((String dropDownStringItem) {
-              return DropdownMenuItem<String>(
-                value: dropDownStringItem,
-                child: Row(
-                  children: [
-                    Flexible(
-                      child: Text(
-                        dropDownStringItem,
-                        style: widget.style,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    )
-                  ],
+
+        Flexible(
+          child: Row(
+            children: [
+              Container(
+                child: widget.countryLogo,
+              ),
+
+              Flexible(
+                child: InputDecorator(
+                  decoration: widget.decoration,
+                  child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        dropdownColor: widget.dropdownColor,
+                        isExpanded: true,
+                        items: _states.map((String dropDownStringItem) {
+                          return DropdownMenuItem<String>(
+                            value: dropDownStringItem,
+                            child: Row(
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    dropDownStringItem,
+                                    style: widget.style,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (value) => _onSelectedState(value!),
+                        onTap: widget.onStateTap,
+                        value: _selectedState,
+                      )),
                 ),
-              );
-            }).toList(),
-            onChanged: (value) => _onSelectedState(value!),
-            onTap: widget.onStateTap,
-            value: _selectedState,
-          )),
-        ),
-        SizedBox(
-          height: widget.spacing,
-        ),
-        InputDecorator(
-          decoration: widget.decoration,
-          child: DropdownButtonHideUnderline(
-              child: DropdownButton<String>(
-            dropdownColor: widget.dropdownColor,
-            isExpanded: true,
-            items: _cities.map((String dropDownStringItem) {
-              return DropdownMenuItem<String>(
-                value: dropDownStringItem,
-                child: Row(
-                  children: [
-                    Flexible(
-                      child: Text(
-                        dropDownStringItem,
-                        style: widget.style,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    )
-                  ],
-                ),
-              );
-            }).toList(),
-            onChanged: (value) => _onSelectedCity(value!),
-            onTap: widget.onCityTap,
-            value: _selectedCity,
-          )),
-        ),
+              ),
+            ],
+          ),
+        )
+
+
+
+
       ],
     );
   }
