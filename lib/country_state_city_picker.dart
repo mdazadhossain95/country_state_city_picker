@@ -174,82 +174,77 @@ class _SelectStateState extends State<SelectState> {
                   decoration: widget.decoration,
                   child: DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
-                        dropdownColor: widget.dropdownColor,
-                        isExpanded: true,
-                        items: _country.map((String dropDownStringItem) {
-                          return DropdownMenuItem<String>(
-                            value: dropDownStringItem,
-                            child: Row(
-                              children: [
-                                Flexible(
-                                  child: Text(
-                                    dropDownStringItem,
-                                    style: widget.style,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                )
-                              ],
-                            ),
-                          );
-                        }).toList(),
-                        // onTap: ,
-                        onChanged: (value) => _onSelectedCountry(value!),
-                        onTap: widget.onCountryTap,
-                        // onChanged: (value) => _onSelectedCountry(value!),
-                        value: _selectedCountry,
-                      )),
+                    dropdownColor: widget.dropdownColor,
+                    isExpanded: true,
+                    items: _country.map((String dropDownStringItem) {
+                      return DropdownMenuItem<String>(
+                        value: dropDownStringItem,
+                        child: Row(
+                          children: [
+                            Flexible(
+                              child: Text(
+                                dropDownStringItem,
+                                style: widget.style,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            )
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                    // onTap: ,
+                    onChanged: (value) => _onSelectedCountry(value!),
+                    onTap: widget.onCountryTap,
+                    // onChanged: (value) => _onSelectedCountry(value!),
+                    value: _selectedCountry,
+                  )),
                 ),
               ),
             ],
           ),
         ),
         SizedBox(
-          width: 10,
+          width: widget.spacing,
         ),
-
         Flexible(
           child: Row(
             children: [
               Container(
-                child: widget.countryLogo,
+                child: widget.stateLogo,
               ),
-
               Flexible(
                 child: InputDecorator(
                   decoration: widget.decoration,
                   child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        dropdownColor: widget.dropdownColor,
-                        isExpanded: true,
-                        items: _states.map((String dropDownStringItem) {
-                          return DropdownMenuItem<String>(
-                            value: dropDownStringItem,
-                            child: Row(
-                              children: [
-                                Flexible(
-                                  child: Text(
-                                    dropDownStringItem,
-                                    style: widget.style,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                )
-                              ],
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (value) => _onSelectedState(value!),
-                        onTap: widget.onStateTap,
-                        value: _selectedState,
-                      )),
+                    child: DropdownButton<String>(
+                      dropdownColor: widget.dropdownColor,
+                      isExpanded: true,
+                      items: _states.map((String dropDownStringItem) {
+                        return DropdownMenuItem<String>(
+                          value: dropDownStringItem,
+                          child: Row(
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  dropDownStringItem,
+                                  style: widget.style,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (value) => _onSelectedState(value!),
+                      onTap: widget.onStateTap,
+                      value: _selectedState,
+                    ),
+                  ),
                 ),
               ),
             ],
           ),
         )
-
-
-
-
       ],
     );
   }

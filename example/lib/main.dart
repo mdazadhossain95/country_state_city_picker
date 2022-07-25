@@ -56,21 +56,21 @@ class _MyHomePageState extends State<MyHomePage> {
                     color: Colors.black,
                     fontWeight: FontWeight.w700
                   ),
-                  spacing: 25.0,
-                  countryLogo: Icon(Icons.public),
+                  spacing: ,
+                  // spacing: 25.0,
+                  countryLogo: Icon(Icons.domain),
                   onCountryChanged: (value) {
                     setState(() {
                       countryValue = value;
                     });
                   },
-                  stateLogo: Icon(Icons.domain),
-                  onCountryTap: () => displayMsg('You\'ve tapped on countries!'),
+                  space: 15,
+                  stateLogo: Icon(Icons.public),
                   onStateChanged: (value) {
                     setState(() {
                       stateValue = value;
                     });
                   },
-                  onStateTap: () => displayMsg('You\'ve tapped on states!'),
                   iconColor: Colors.black,
                 ),
               ],
